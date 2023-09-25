@@ -1,6 +1,7 @@
 package com.elotech.projeto.projetoSpringBoot.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -23,6 +24,7 @@ public class ContatosModel implements Serializable {
 
    @ManyToOne
    @JoinColumn(name = "ID_PERSON")
+   @JsonIgnore
    private PessoaModel person;
 
     public PessoaModel getPerson() {

@@ -5,7 +5,6 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +19,7 @@ public class PessoaModel extends RepresentationModel<PessoaModel>implements Seri
     private UUID idPessoa;
     private String cpf;
     private String name;
-   private LocalDate dataNasc;
+   private String dataNasc;
 
 @OneToMany
 @JoinColumn(name = "ID_PERSON")
@@ -58,11 +57,11 @@ private List<ContatosModel> contacts;
         this.cpf = cpf;
     }
 
-    public LocalDate getDataNasc() {
+    public String getDataNasc() {
         return dataNasc;
     }
 
-    public void setDataNasc(LocalDate dataNasc) {
+    public void setDataNasc(String dataNasc) {
         this.dataNasc = dataNasc;
     }
 }

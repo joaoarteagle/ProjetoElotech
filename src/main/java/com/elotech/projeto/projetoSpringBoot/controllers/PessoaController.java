@@ -14,26 +14,29 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 @RestController
+@RequestMapping("/pessoas")
 public class PessoaController {
 
     @Autowired
     PessoaRepository pessoaRepository;
 
-    @PostMapping("/pessoas/post")
-    public ResponseEntity<PessoaModel> save(@RequestBody @Valid PessoaRecordDto pessoaRecordDto){
+
+    @PostMapping("/post")
+    public ResponseEntity<PessoaModel> save(@ModelAttribute PessoaModel user,
+                                            @RequestBody @Valid PessoaRecordDto pessoaRecordDto){
         var pessoaModel = new PessoaModel();
         BeanUtils.copyProperties(pessoaRecordDto, pessoaModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaRepository.save(pessoaModel));
     }
 
 
-    @GetMapping("/pessoas/get")
+    @GetMapping("/get")
     public ResponseEntity<List<PessoaModel>> getAllPeople(){
         List<PessoaModel> pessoaModelList = pessoaRepository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(pessoaModelList);
     }
 
-    @GetMapping("/pessoas/get/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Object> getOnePerson(@PathVariable(value = "id")UUID id){
         Optional<PessoaModel> person0 = pessoaRepository.findById(id);
         if(person0.isEmpty()){
@@ -44,7 +47,7 @@ public class PessoaController {
     }
 
 
-    @PutMapping("/pessoas/put/{id}")
+    @PutMapping("/put/{id}")
     public ResponseEntity<Object> updatePerson(@PathVariable(value = "id")UUID id,
                                                @RequestBody @Valid PessoaRecordDto pessoaRecordDto){
 
@@ -58,7 +61,7 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaRepository.save(personModel));
     }
 
-    @DeleteMapping("/pessoas/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deletePerson(@PathVariable(value = "id")UUID id ){
 
         Optional<PessoaModel> person0 = pessoaRepository.findById(id);
