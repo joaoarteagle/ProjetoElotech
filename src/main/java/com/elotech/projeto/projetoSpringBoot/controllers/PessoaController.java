@@ -2,6 +2,7 @@ package com.elotech.projeto.projetoSpringBoot.controllers;
 
 import com.elotech.projeto.projetoSpringBoot.dtos.PessoaRecordDto;
 import com.elotech.projeto.projetoSpringBoot.models.PessoaModel;
+import com.elotech.projeto.projetoSpringBoot.repositories.ContactsRepository;
 import com.elotech.projeto.projetoSpringBoot.repositories.PessoaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -20,11 +21,13 @@ public class PessoaController {
     @Autowired
     PessoaRepository pessoaRepository;
 
+    @Autowired
+    ContactsRepository contactsRepositoty;
 
     @PostMapping("/post")
     public ResponseEntity<PessoaModel> save(@ModelAttribute PessoaModel user,
                                             @RequestBody @Valid PessoaRecordDto pessoaRecordDto){
-        var pessoaModel = new PessoaModel();
+        PessoaModel pessoaModel = new PessoaModel();
         BeanUtils.copyProperties(pessoaRecordDto, pessoaModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaRepository.save(pessoaModel));
     }

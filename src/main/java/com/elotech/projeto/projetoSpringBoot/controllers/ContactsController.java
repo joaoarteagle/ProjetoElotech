@@ -1,9 +1,7 @@
 package com.elotech.projeto.projetoSpringBoot.controllers;
 
 import com.elotech.projeto.projetoSpringBoot.dtos.ContatoRecordDto;
-import com.elotech.projeto.projetoSpringBoot.dtos.PessoaRecordDto;
 import com.elotech.projeto.projetoSpringBoot.models.ContatosModel;
-import com.elotech.projeto.projetoSpringBoot.models.PessoaModel;
 import com.elotech.projeto.projetoSpringBoot.repositories.ContactsRepository;
 import com.elotech.projeto.projetoSpringBoot.repositories.PessoaRepository;
 import jakarta.validation.Valid;
@@ -95,23 +93,23 @@ public class ContactsController {
         return ResponseEntity.status(HttpStatus.OK).body(contactsRepository.save(contatosModel));
 
     }
-    @GetMapping("/get/{idPerson}")
-    public ResponseEntity<Object> getContactPerson(@PathVariable(value = "idPerson")UUID id,
-                                                   @RequestBody @Valid PessoaRecordDto pessoaRecordDto){
-
-        var person = new PessoaModel(pessoaRepository.findById(id));
-        person.getContacts();
-        if(person.getContacts()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cadastro de Contato não Encontrado.");
-
-        }
-        List<ContatosModel> contactPerson = contactsRepository.findAll();
-        if(contactPerson.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cadastro de Contato não Encontrado.");
-
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(contactPerson.get());
-
-
-    }
+//    @GetMapping("/get/{idPerson}")
+//    public ResponseEntity<Object> getContactPerson(@PathVariable(value = "idPerson")UUID id,
+//                                                   @RequestBody @Valid PessoaRecordDto pessoaRecordDto){
+//
+//        var person = new PessoaModel(pessoaRepository.findById(id));
+//        person.getContacts();
+//        if(person.getContacts().isEmpty()){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cadastro de Contato não Encontrado.");
+//
+//        }
+//        List<ContatosModel> contactPerson = contactsRepository.findAll();
+//        if(contactPerson.isEmpty()){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cadastro de Contato não Encontrado.");
+//
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(contactPerson.get());
+//
+//
+//    }
 }

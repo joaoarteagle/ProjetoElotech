@@ -27,6 +27,16 @@ public class ContatosModel implements Serializable {
    @JsonIgnore
    private PessoaModel person;
 
+    public ContatosModel() {
+    }
+
+    public ContatosModel(String name, int fone, String email, PessoaModel person) {
+        this.name = name;
+        this.fone = fone;
+        this.email = email;
+        this.person = person;
+    }
+
     public PessoaModel getPerson() {
         return person;
     }

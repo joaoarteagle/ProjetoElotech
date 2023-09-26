@@ -33,6 +33,18 @@ private List<ContatosModel> contacts;
         this.contacts = contacts;
     }
 
+    public PessoaModel() {
+    }
+
+    public PessoaModel(String cpf, String name, String dataNasc, List<ContatosModel> contacts) {
+        this.cpf = cpf;
+        this.name = name;
+        this.dataNasc = dataNasc;
+        this.contacts = contacts;
+    }
+
+
+
     public UUID getIdPessoa() {
         return idPessoa;
     }
