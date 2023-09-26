@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static com.elotech.projeto.projetoSpringBoot.functions.CpfFunctions.cpfValido;
+import static com.elotech.projeto.projetoSpringBoot.functions.DataFunctions.dataNascValida;
+
 @RestController
 @RequestMapping("/pessoas")
 public class PessoaController {
@@ -25,10 +29,18 @@ public class PessoaController {
     ContactsRepository contactsRepositoty;
 
     @PostMapping("/post")
-    public ResponseEntity<PessoaModel> save(@ModelAttribute PessoaModel user,
+    public ResponseEntity<Object> save(@ModelAttribute PessoaModel user,
                                             @RequestBody @Valid PessoaRecordDto pessoaRecordDto){
         PessoaModel pessoaModel = new PessoaModel();
         BeanUtils.copyProperties(pessoaRecordDto, pessoaModel);
+        if (!cpfValido(pessoaModel.getCpf())){
+
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("CPF invalido");
+        } else if (!dataNascValida(pessoaModel.getDataNasc())) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Data de Nascimento Invalida");
+        }
+
+
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaRepository.save(pessoaModel));
     }
 

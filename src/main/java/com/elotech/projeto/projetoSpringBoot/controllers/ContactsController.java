@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.elotech.projeto.projetoSpringBoot.functions.EmailFunctions.emailValido;
+import static com.elotech.projeto.projetoSpringBoot.functions.TelefoneFunctions.TelefoneValido;
+
 @RestController
 @RequestMapping("/pessoas/contatos")
 public class ContactsController {
@@ -26,11 +29,18 @@ public class ContactsController {
     PessoaRepository pessoaRepository;
 
     @PostMapping("/post")
-    public ResponseEntity<ContatosModel> save(
+    public ResponseEntity<Object> save(
                                               @RequestBody @Valid ContatoRecordDto contatoRecordDto){
 
         var contatosModel =  new ContatosModel();
         BeanUtils.copyProperties(contatoRecordDto,contatosModel);
+       if (!emailValido(contatosModel.getEmail())) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Email Invalido");
+        }else  if (!TelefoneValido(contatosModel.getFone())){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Telefone Invalido");
+        }
+
+
         return ResponseEntity.status(HttpStatus.OK).body(contactsRepository.save(contatosModel));
     }
 
@@ -85,11 +95,14 @@ public class ContactsController {
     }
 
     @PostMapping("/post/{id}")
-    public ResponseEntity<Object> postContact(@PathVariable (value = "id")UUID id,
+    public ResponseEntity<Object> saveContact(@PathVariable (value = "id")UUID id,
                                                 @RequestBody @Valid ContatoRecordDto contatoRecordDto){
         var contatosModel =  new ContatosModel();
         contatosModel.setPerson(pessoaRepository.getReferenceById(id));
         BeanUtils.copyProperties(contatoRecordDto,contatosModel);
+        if (!TelefoneValido(contatosModel.getFone())){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Telefone Invalido");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(contactsRepository.save(contatosModel));
 
     }

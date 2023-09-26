@@ -19,7 +19,7 @@ public class ContatosModel implements Serializable {
    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
    private String name;
-   private int fone;
+   private String fone;
    private String email;
 
    @ManyToOne
@@ -30,7 +30,7 @@ public class ContatosModel implements Serializable {
     public ContatosModel() {
     }
 
-    public ContatosModel(String name, int fone, String email, PessoaModel person) {
+    public ContatosModel(String name, String fone, String email, PessoaModel person) {
         this.name = name;
         this.fone = fone;
         this.email = email;
@@ -63,11 +63,11 @@ public class ContatosModel implements Serializable {
         this.name = name;
     }
 
-    public int getFone() {
+    public String getFone() {
         return fone;
     }
 
-    public void setFone(int fone) {
+    public void setFone(String fone) {
         this.fone = fone;
     }
 
